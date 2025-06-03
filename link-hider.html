@@ -42,14 +42,36 @@
 
     h1 {
       font-size: 3rem;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
       text-shadow: 0 0 20px #ff1a1a, 0 0 40px #cc0000;
     }
 
-    p {
-      font-size: 1rem;
-      max-width: 600px;
+    .input-box {
+      background-color: rgba(255, 26, 26, 0.05);
+      border: 1px solid rgba(255, 26, 26, 0.3);
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      width: 300px;
+      max-width: 80%;
       margin-bottom: 2rem;
+      backdrop-filter: blur(5px);
+    }
+
+    .input-box input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid #ff1a1a;
+      color: #ff1a1a;
+      outline: none;
+      text-align: center;
+    }
+
+    .input-box input::placeholder {
+      color: #ff4d4d;
+      opacity: 0.6;
     }
 
     a.back {
@@ -75,8 +97,10 @@
   <canvas id="background"></canvas>
 
   <div class="container">
-    <h1>LINK HIDER TOOL</h1>
-    <p>This is where your fake link hider tool will go. Add input boxes, copy buttons, or link generators here.</p>
+    <h1>WARO BEAMS</h1>
+    <div class="input-box">
+      <input type="text" placeholder="Enter a link...">
+    </div>
     <a href="index.html" class="back">← Back to WARO BEAMS</a>
   </div>
 
