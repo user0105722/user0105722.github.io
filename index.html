@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WARO — Neon Cyberpunk Server</title>
+  <title>WARO — Dark Red Cyberpunk Server</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap');
 
@@ -13,8 +13,8 @@
     }
 
     body {
-      background: #000000;
-      color: #ff0055;
+      background: #120000; /* very dark red almost black */
+      color: #ff1a1a; /* bright red */
       font-family: 'Share Tech Mono', monospace;
       overflow-x: hidden;
       height: 100vh;
@@ -34,8 +34,8 @@
       top: 0; left: 0; width: 100%; height: 100%;
       background: repeating-linear-gradient(
         0deg,
-        rgba(255,0,85,0.05),
-        rgba(255,0,85,0.05) 1px,
+        rgba(255, 26, 26, 0.05),
+        rgba(255, 26, 26, 0.05) 1px,
         transparent 1px,
         transparent 3px
       );
@@ -59,15 +59,15 @@
       z-index: 1;
       font-family: 'VT323', monospace;
       font-size: 1.3rem;
-      color: #ff0055;
-      opacity: 0.12;
+      color: #ff1a1a;
+      opacity: 0.1;
       user-select: none;
+      text-shadow: 0 0 6px #ff0000;
     }
     .code-rain span {
       display: inline-block;
       animation: fall 8s linear infinite;
       white-space: nowrap;
-      text-shadow: 0 0 8px #ff0055;
     }
     @keyframes fall {
       0% { transform: translateY(-100%); opacity: 0; }
@@ -80,17 +80,16 @@
       font-size: 5rem;
       font-weight: 900;
       letter-spacing: 0.3em;
-      color: #ff0099;
+      color: #ff0000;
       text-transform: uppercase;
       text-align: center;
       margin-bottom: 3rem;
       text-shadow:
-        0 0 8px #ff0099,
-        0 0 20px #ff3399,
-        0 0 30px #ff66bb,
-        0 0 40px #ff99cc,
-        0 0 50px #ff0099,
-        0 0 70px #ff66bb;
+        0 0 10px #ff0000,
+        0 0 25px #cc0000,
+        0 0 40px #990000,
+        0 0 60px #ff3333,
+        0 0 80px #ff0000;
       animation: flicker 3s infinite;
       user-select: none;
       z-index: 2;
@@ -100,12 +99,11 @@
       0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
         opacity: 1;
         text-shadow:
-          0 0 8px #ff0099,
-          0 0 20px #ff3399,
-          0 0 30px #ff66bb,
-          0 0 40px #ff99cc,
-          0 0 50px #ff0099,
-          0 0 70px #ff66bb;
+          0 0 10px #ff0000,
+          0 0 25px #cc0000,
+          0 0 40px #990000,
+          0 0 60px #ff3333,
+          0 0 80px #ff0000;
       }
       20%, 22%, 24%, 55% {
         opacity: 0.4;
@@ -115,33 +113,33 @@
 
     /* Glassmorphism content sections */
     .content {
-      background: rgba(255, 0, 85, 0.1);
-      border: 2px solid #ff0066;
+      background: rgba(255, 0, 0, 0.1);
+      border: 2px solid #cc0000;
       border-radius: 15px;
       box-shadow:
-        0 0 15px #ff0055,
-        inset 0 0 15px #ff3399;
+        0 0 15px #ff0000,
+        inset 0 0 15px #cc0000;
       max-width: 700px;
       width: 90%;
       padding: 2rem;
       margin-bottom: 3rem;
       backdrop-filter: blur(6px);
-      color: #ffaad3;
+      color: #ff6666;
       transition: box-shadow 0.5s ease;
       z-index: 2;
       position: relative;
     }
     .content:hover {
       box-shadow:
-        0 0 25px #ff00bb,
-        inset 0 0 25px #ff66cc;
+        0 0 30px #ff3300,
+        inset 0 0 25px #ff3300;
     }
 
     .content h2 {
       font-size: 2.2rem;
       margin-bottom: 1rem;
-      color: #ff66cc;
-      text-shadow: 0 0 12px #ff3399;
+      color: #ff3333;
+      text-shadow: 0 0 12px #cc0000;
       user-select: none;
     }
 
@@ -149,7 +147,7 @@
       font-size: 1.15rem;
       line-height: 1.5;
       margin-bottom: 1rem;
-      color: #ff99cc;
+      color: #ff9999;
     }
 
     ul {
@@ -166,15 +164,15 @@
       content: "▸";
       position: absolute;
       left: 0;
-      color: #ff33aa;
+      color: #ff4d4d;
     }
 
     /* Neon button */
     .btn {
       display: inline-block;
       padding: 0.8rem 2.2rem;
-      border: 2px solid #ff3399;
-      color: #ff3399;
+      border: 2px solid #cc0000;
+      color: #cc0000;
       font-weight: 700;
       font-size: 1.2rem;
       border-radius: 40px;
@@ -186,12 +184,12 @@
       user-select: none;
       margin-top: 1rem;
       text-align: center;
-      box-shadow: 0 0 15px #ff3399;
+      box-shadow: 0 0 15px #cc0000;
     }
     .btn:hover {
-      background-color: #ff3399;
-      color: #1a001a;
-      box-shadow: 0 0 40px #ff66cc;
+      background-color: #cc0000;
+      color: #330000;
+      box-shadow: 0 0 40px #ff3300;
     }
 
     /* Responsive */
