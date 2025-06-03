@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WARO BEAMS</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
 
     * {
       margin: 0;
@@ -13,11 +13,12 @@
       box-sizing: border-box;
     }
 
-    body, html {
+    html, body {
       height: 100%;
-      background: black;
-      font-family: 'Share Tech Mono', monospace;
+      background: #000;
+      font-family: 'Orbitron', sans-serif;
       overflow: hidden;
+      color: #ff1a1a;
     }
 
     canvas {
@@ -36,25 +37,24 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      color: #ff1a1a;
-      text-shadow: 0 0 10px #ff1a1a, 0 0 20px #cc0000;
       padding: 2rem;
     }
 
     .main-title {
-      font-size: 3.5rem;
+      font-size: 4rem;
+      letter-spacing: 3px;
       margin-bottom: 2rem;
-      animation: flicker 2s infinite;
+      text-shadow: 0 0 10px #ff1a1a, 0 0 30px #cc0000;
     }
 
     .welcome-box {
       background: rgba(255, 0, 0, 0.1);
-      border: 2px solid #cc0000;
-      border-radius: 10px;
+      border: 2px solid #ff1a1a;
       padding: 1.2rem 2rem;
-      font-size: 1.3rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 0 12px #cc0000;
+      font-size: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 0 15px #cc0000;
     }
 
     .btn-container {
@@ -64,31 +64,22 @@
     }
 
     .btn {
-      background: transparent;
-      border: 2px solid #cc0000;
+      background: #0d0d0d;
+      border: 2px solid #ff1a1a;
       color: #ff1a1a;
-      padding: 0.7rem 2rem;
+      padding: 0.8rem 2.2rem;
       font-size: 1rem;
       cursor: pointer;
-      border-radius: 40px;
-      text-transform: uppercase;
+      border-radius: 50px;
       transition: 0.3s;
-      box-shadow: 0 0 15px #cc0000;
+      text-transform: uppercase;
+      box-shadow: 0 0 10px #ff1a1a33;
     }
 
     .btn:hover {
-      background: #cc0000;
-      color: black;
+      background: #ff1a1a;
+      color: #000;
       box-shadow: 0 0 25px #ff0000;
-    }
-
-    @keyframes flicker {
-      0%, 18%, 22%, 25%, 53%, 57%, 100% {
-        opacity: 1;
-      }
-      20%, 24%, 55% {
-        opacity: 0.4;
-      }
     }
   </style>
 </head>
@@ -99,9 +90,9 @@
     <div class="main-title">WARO BEAMS</div>
     <div class="welcome-box">Where would you like to go?</div>
     <div class="btn-container">
-      <button class="btn" onclick="alert('Link Hider Clicked')">LINK HIDER</button>
-      <button class="btn" onclick="alert('Fake Link Clicked')">FAKE LINK</button>
-      <button class="btn" onclick="alert('Discord Clicked')">DISCORD</button>
+      <button class="btn">LINK HIDER</button>
+      <button class="btn">FAKE LINK</button>
+      <button class="btn">DISCORD</button>
     </div>
   </div>
 
@@ -128,8 +119,8 @@
         this.x = Math.random() * width;
         this.y = Math.random() * height;
         this.radius = Math.random() * 2;
-        this.vx = Math.random() * 0.6 - 0.3;
-        this.vy = Math.random() * 0.6 - 0.3;
+        this.vx = Math.random() * 0.5 - 0.25;
+        this.vy = Math.random() * 0.5 - 0.25;
       }
 
       move() {
@@ -143,12 +134,12 @@
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 30, 30, 0.6)';
+        ctx.fillStyle = 'rgba(255, 0, 0, 0.6)';
         ctx.fill();
       }
     }
 
-    for (let i = 0; i < 120; i++) {
+    for (let i = 0; i < 100; i++) {
       particles.push(new Particle());
     }
 
@@ -159,7 +150,7 @@
           let dy = particles[a].y - particles[b].y;
           let distance = dx * dx + dy * dy;
 
-          if (distance < 5000) {
+          if (distance < 4000) {
             ctx.beginPath();
             ctx.strokeStyle = 'rgba(255, 0, 0, 0.1)';
             ctx.lineWidth = 1;
