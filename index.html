@@ -8,134 +8,180 @@
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
     * {
-      margin: 0; padding: 0; box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    body {
-      background: #120000;
-      color: #ff1a1a;
+    body, html {
+      height: 100%;
+      background: black;
       font-family: 'Share Tech Mono', monospace;
-      height: 100vh;
+      overflow: hidden;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      height: 100%;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      padding: 1rem;
-      user-select: none;
-      overflow: hidden;
-      position: relative;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(255, 26, 26, 0.05),
-        rgba(255, 26, 26, 0.05) 1px,
-        transparent 1px,
-        transparent 3px
-      );
-      pointer-events: none;
-      z-index: 0;
-      animation: scanlineMove 7s linear infinite;
-    }
-
-    @keyframes scanlineMove {
-      0% { background-position: 0 0; }
-      100% { background-position: 0 100%; }
+      align-items: center;
+      text-align: center;
+      color: #ff1a1a;
+      text-shadow: 0 0 10px #ff1a1a, 0 0 20px #cc0000;
+      padding: 2rem;
     }
 
     .main-title {
       font-size: 3.5rem;
-      color: #ff4d4d;
-      text-shadow:
-        0 0 10px #ff1a1a,
-        0 0 20px #cc0000,
-        0 0 30px #ff1a1a;
-      animation: flicker 3s infinite;
-      z-index: 1;
       margin-bottom: 2rem;
+      animation: flicker 2s infinite;
     }
 
     .welcome-box {
-      background: rgba(255, 0, 0, 0.15);
+      background: rgba(255, 0, 0, 0.1);
       border: 2px solid #cc0000;
-      border-radius: 12px;
-      padding: 1.5rem 2.5rem;
-      max-width: 600px;
-      text-align: center;
-      color: #ff4d4d;
-      font-size: 1.4rem;
-      box-shadow:
-        0 0 15px #ff0000,
-        inset 0 0 20px #cc0000;
-      text-shadow:
-        0 0 6px #ff1a1a,
-        0 0 12px #cc0000;
-      animation: flicker 4s infinite;
-      z-index: 1;
-      font-weight: 600;
+      border-radius: 10px;
+      padding: 1.2rem 2rem;
+      font-size: 1.3rem;
       margin-bottom: 2rem;
-    }
-
-    @keyframes flicker {
-      0%, 20%, 40%, 60%, 80%, 100% {
-        opacity: 1;
-        text-shadow:
-          0 0 6px #ff1a1a,
-          0 0 12px #cc0000;
-      }
-      10%, 30%, 50%, 70%, 90% {
-        opacity: 0.7;
-        text-shadow: none;
-      }
+      box-shadow: 0 0 12px #cc0000;
     }
 
     .btn-container {
       display: flex;
-      gap: 2rem;
-      z-index: 1;
+      gap: 1.5rem;
+      flex-wrap: wrap;
     }
 
     .btn {
-      padding: 0.8rem 2.5rem;
-      font-size: 1.2rem;
-      font-weight: 700;
-      font-family: 'Share Tech Mono', monospace;
-      color: #cc0000;
       background: transparent;
       border: 2px solid #cc0000;
-      border-radius: 40px;
+      color: #ff1a1a;
+      padding: 0.7rem 2rem;
+      font-size: 1rem;
       cursor: pointer;
+      border-radius: 40px;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
+      transition: 0.3s;
       box-shadow: 0 0 15px #cc0000;
-      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-      user-select: none;
     }
 
     .btn:hover {
-      background-color: #cc0000;
-      color: #330000;
-      box-shadow: 0 0 40px #ff3300;
+      background: #cc0000;
+      color: black;
+      box-shadow: 0 0 25px #ff0000;
+    }
+
+    @keyframes flicker {
+      0%, 18%, 22%, 25%, 53%, 57%, 100% {
+        opacity: 1;
+      }
+      20%, 24%, 55% {
+        opacity: 0.4;
+      }
     }
   </style>
 </head>
 <body>
+  <canvas id="background"></canvas>
 
-  <div class="main-title">WARO BEAMS</div>
-
-  <div class="welcome-box">
-    Where would you like to go?
+  <div class="container">
+    <div class="main-title">WARO BEAMS</div>
+    <div class="welcome-box">Where would you like to go?</div>
+    <div class="btn-container">
+      <button class="btn" onclick="alert('Link Hider Clicked')">LINK HIDER</button>
+      <button class="btn" onclick="alert('Fake Link Clicked')">FAKE LINK</button>
+      <button class="btn" onclick="alert('Discord Clicked')">DISCORD</button>
+    </div>
   </div>
 
-  <div class="btn-container">
-    <button class="btn" onclick="alert('Link Hider clicked!')">LINK HIDER</button>
-    <button class="btn" onclick="alert('Fake Link clicked!')">FAKE LINK</button>
-    <button class="btn" onclick="alert('Discord clicked!')">DISCORD</button>
-  </div>
+  <script>
+    const canvas = document.getElementById('background');
+    const ctx = canvas.getContext('2d');
 
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.radius = Math.random() * 2;
+        this.vx = Math.random() * 0.6 - 0.3;
+        this.vy = Math.random() * 0.6 - 0.3;
+      }
+
+      move() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 30, 30, 0.6)';
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 120; i++) {
+      particles.push(new Particle());
+    }
+
+    function connectParticles() {
+      for (let a = 0; a < particles.length; a++) {
+        for (let b = a + 1; b < particles.length; b++) {
+          let dx = particles[a].x - particles[b].x;
+          let dy = particles[a].y - particles[b].y;
+          let distance = dx * dx + dy * dy;
+
+          if (distance < 5000) {
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(255, 0, 0, 0.1)';
+            ctx.lineWidth = 1;
+            ctx.moveTo(particles[a].x, particles[a].y);
+            ctx.lineTo(particles[b].x, particles[b].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => {
+        p.move();
+        p.draw();
+      });
+      connectParticles();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
 </body>
 </html>
