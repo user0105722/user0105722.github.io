@@ -1,241 +1,255 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WARO — Cyber Hacker Server</title>
+  <title>WARO — Neon Cyberpunk Server</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap');
 
     /* Reset */
     * {
-      box-sizing: border-box;
+      margin: 0; padding: 0; box-sizing: border-box;
     }
 
     body {
-      margin: 0;
-      background: #0a0a0a;
-      color: #ff3333;
+      background: #000000;
+      color: #ff0055;
       font-family: 'Share Tech Mono', monospace;
       overflow-x: hidden;
-      scroll-behavior: smooth;
-    }
-
-    /* Glitch text effect */
-    .glitch {
-      position: relative;
-      color: #ff0000;
-      font-size: 4rem;
-      font-weight: 900;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      text-align: center;
-      margin: 3rem 1rem 5rem;
-      user-select: none;
-    }
-    .glitch::before,
-    .glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 0;
-      right: 0;
-      opacity: 0.8;
-      clip: rect(0, 900px, 0, 0);
-    }
-    .glitch::before {
-      animation: glitchTop 2s infinite linear alternate-reverse;
-      color: #ff6666;
-      z-index: -1;
-    }
-    .glitch::after {
-      animation: glitchBottom 3s infinite linear alternate-reverse;
-      color: #ff0000;
-      z-index: -2;
-    }
-    @keyframes glitchTop {
-      0% {
-        clip: rect(0, 9999px, 5px, 0);
-        transform: translate(-3px, -2px);
-      }
-      20% {
-        clip: rect(0, 9999px, 10px, 0);
-        transform: translate(3px, 2px);
-      }
-      40% {
-        clip: rect(0, 9999px, 6px, 0);
-        transform: translate(-3px, 2px);
-      }
-      60% {
-        clip: rect(0, 9999px, 12px, 0);
-        transform: translate(3px, -2px);
-      }
-      80% {
-        clip: rect(0, 9999px, 5px, 0);
-        transform: translate(-3px, -2px);
-      }
-      100% {
-        clip: rect(0, 9999px, 6px, 0);
-        transform: translate(0);
-      }
-    }
-    @keyframes glitchBottom {
-      0% {
-        clip: rect(10px, 9999px, 15px, 0);
-        transform: translate(3px, 2px);
-      }
-      20% {
-        clip: rect(5px, 9999px, 10px, 0);
-        transform: translate(-3px, -2px);
-      }
-      40% {
-        clip: rect(8px, 9999px, 14px, 0);
-        transform: translate(3px, -2px);
-      }
-      60% {
-        clip: rect(3px, 9999px, 10px, 0);
-        transform: translate(-3px, 2px);
-      }
-      80% {
-        clip: rect(10px, 9999px, 15px, 0);
-        transform: translate(3px, 2px);
-      }
-      100% {
-        clip: rect(5px, 9999px, 14px, 0);
-        transform: translate(0);
-      }
-    }
-
-    /* Container and sections */
-    .container {
-      width: 90%;
-      max-width: 900px;
-      margin: 0 auto 5rem auto;
+      height: 100vh;
       display: flex;
       flex-direction: column;
-      gap: 3rem;
-    }
-
-    section {
-      background: #1a0000;
-      border: 2px solid #ff0000;
-      border-radius: 10px;
-      padding: 2rem;
-      box-shadow: 0 0 20px #ff1a1a;
-      transition: box-shadow 0.3s ease-in-out;
-    }
-    section:hover {
-      box-shadow: 0 0 40px #ff4d4d;
-    }
-
-    section h2 {
-      margin-top: 0;
-      font-size: 2rem;
-      color: #ff5555;
-      text-shadow: 0 0 8px #ff0000;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 3rem 1rem;
+      position: relative;
       user-select: none;
-      letter-spacing: 0.1em;
-      margin-bottom: 1rem;
     }
 
-    section p, section ul {
-      font-size: 1.1rem;
+    /* Scanline effect background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255,0,85,0.05),
+        rgba(255,0,85,0.05) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      pointer-events: none;
+      z-index: 0;
+      animation: scanlineMove 7s linear infinite;
+    }
+    @keyframes scanlineMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 100%; }
+    }
+
+    /* Falling code effect */
+    .code-rain {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+      font-family: 'VT323', monospace;
+      font-size: 1.3rem;
+      color: #ff0055;
+      opacity: 0.12;
+      user-select: none;
+    }
+    .code-rain span {
+      display: inline-block;
+      animation: fall 8s linear infinite;
+      white-space: nowrap;
+      text-shadow: 0 0 8px #ff0055;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-100%); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(120vh); opacity: 0; }
+    }
+
+    /* Neon flicker title */
+    h1 {
+      font-size: 5rem;
+      font-weight: 900;
+      letter-spacing: 0.3em;
+      color: #ff0099;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 3rem;
+      text-shadow:
+        0 0 8px #ff0099,
+        0 0 20px #ff3399,
+        0 0 30px #ff66bb,
+        0 0 40px #ff99cc,
+        0 0 50px #ff0099,
+        0 0 70px #ff66bb;
+      animation: flicker 3s infinite;
+      user-select: none;
+      z-index: 2;
+      position: relative;
+    }
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+        text-shadow:
+          0 0 8px #ff0099,
+          0 0 20px #ff3399,
+          0 0 30px #ff66bb,
+          0 0 40px #ff99cc,
+          0 0 50px #ff0099,
+          0 0 70px #ff66bb;
+      }
+      20%, 22%, 24%, 55% {
+        opacity: 0.4;
+        text-shadow: none;
+      }
+    }
+
+    /* Glassmorphism content sections */
+    .content {
+      background: rgba(255, 0, 85, 0.1);
+      border: 2px solid #ff0066;
+      border-radius: 15px;
+      box-shadow:
+        0 0 15px #ff0055,
+        inset 0 0 15px #ff3399;
+      max-width: 700px;
+      width: 90%;
+      padding: 2rem;
+      margin-bottom: 3rem;
+      backdrop-filter: blur(6px);
+      color: #ffaad3;
+      transition: box-shadow 0.5s ease;
+      z-index: 2;
+      position: relative;
+    }
+    .content:hover {
+      box-shadow:
+        0 0 25px #ff00bb,
+        inset 0 0 25px #ff66cc;
+    }
+
+    .content h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      color: #ff66cc;
+      text-shadow: 0 0 12px #ff3399;
+      user-select: none;
+    }
+
+    .content p, .content ul {
+      font-size: 1.15rem;
       line-height: 1.5;
-      color: #ff9999;
+      margin-bottom: 1rem;
+      color: #ff99cc;
     }
 
     ul {
       list-style: none;
-      padding-left: 0;
+      padding-left: 1rem;
     }
 
     ul li {
-      padding-left: 1rem;
-      margin-bottom: 0.6rem;
       position: relative;
-      border-left: 3px solid #ff4444;
-      transition: border-color 0.3s;
+      padding-left: 1.2rem;
+      margin-bottom: 0.5rem;
     }
-
     ul li::before {
-      content: ">";
+      content: "▸";
       position: absolute;
       left: 0;
-      color: #ff0000;
-      font-weight: bold;
+      color: #ff33aa;
     }
 
-    ul li:hover {
-      border-color: #ff7777;
-    }
-
-    /* Navigation bar (for your future pages) */
-    nav {
-      width: 100%;
-      background: #110000;
-      border-bottom: 2px solid #ff0000;
-      box-shadow: 0 0 15px #ff1a1a;
-      position: sticky;
-      top: 0;
-      z-index: 10;
+    /* Neon button */
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 2.2rem;
+      border: 2px solid #ff3399;
+      color: #ff3399;
+      font-weight: 700;
+      font-size: 1.2rem;
+      border-radius: 40px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: transparent;
+      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
       user-select: none;
+      margin-top: 1rem;
+      text-align: center;
+      box-shadow: 0 0 15px #ff3399;
+    }
+    .btn:hover {
+      background-color: #ff3399;
+      color: #1a001a;
+      box-shadow: 0 0 40px #ff66cc;
     }
 
-    nav ul {
-      margin: 0;
-      padding: 0.8rem 2rem;
-      display: flex;
-      justify-content: center;
-      list-style: none;
-      gap: 2rem;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: #ff3333;
-      font-weight: bold;
-      font-size: 1.1rem;
-      letter-spacing: 0.15em;
-      transition: color 0.3s;
-    }
-    nav a:hover {
-      color: #ff7777;
-      text-shadow: 0 0 8px #ff0000;
+    /* Responsive */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 3rem;
+        letter-spacing: 0.15em;
+      }
+      .content {
+        padding: 1.5rem;
+      }
+      .content h2 {
+        font-size: 1.8rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <nav>
-    <ul>
-      <li><a href="#overview">Overview</a></li>
-      <li><a href="#specs">Specs</a></li>
-      <li><a href="#status">Status</a></li>
-      <!-- future links here -->
-    </ul>
-  </nav>
-
-  <h1 class="glitch" data-text="WARO">WARO</h1>
-
-
-    <section id="specs">
-      <h2>Specs</h2>
-      <ul>
-        <li>CPU: 128-core Red Quantum Processor</li>
-        <li>RAM: 2TB Cybernetic DDR8 Memory</li>
-        <li>Storage: 200TB Encrypted NVMe SSD</li>
-        <li>Network: 10Tbps Fiber Optic Darknet Access</li>
-        <li>Power: 99.999999% Uptime | Zero downtime</li>
-      </ul>
-    </section>
-
-    <section id="status">
-      <h2>Status</h2>
-      <p><strong>Operational Status:</strong> Active & Cloaked</p>
-      <p><strong>Current Load:</strong> 22%</p>
-      <p><strong>Last Security Sweep:</strong> June 1, 2025</p>
-      <p><strong>Next Scheduled Update:</strong> July 30, 2025</p>
-    </section>
+  <div class="code-rain" aria-hidden="true">
+    <!-- Random code strings repeated for effect -->
+    <span>01001001 01101110 01110100 01100101 01110010 01101110 01100101 01110100 &nbsp; • &nbsp;</span>
+    <span>01000011 01101111 01101110 01101110 01100101 01100011 01110100 01101001 01101111 01101110 &nbsp; • &nbsp;</span>
+    <span>10101010 11110000 00001111 11001100 &nbsp; • &nbsp;</span>
+    <span>System Override: Enabled &nbsp; • &nbsp;</span>
+    <span>Firewall: Breached &nbsp; • &nbsp;</span>
+    <span>Access Level: Root &nbsp; • &nbsp;</span>
+    <span>Data Stream: Active &nbsp; • &nbsp;</span>
+    <span>Encryption: AES-512 &nbsp; • &nbsp;</span>
+    <span>Loading Exploit Modules &nbsp; • &nbsp;</span>
+    <span>Hacking in Progress... &nbsp; • &nbsp;</span>
   </div>
+
+  <h1>W A R O</h1>
+
+  <section class="content" id="about">
+    <h2>About Waro</h2>
+    <p>Waro is a next-gen cyberpunk server designed to push the boundaries of digital warfare. It blends cutting-edge quantum computation with advanced AI-driven security protocols to maintain absolute dominance in cyberspace.</p>
+    <p>Built for hackers by hackers, Waro delivers lightning-fast data throughput with impenetrable stealth and unyielding resilience.</p>
+  </section>
+
+  <section class="content" id="features">
+    <h2>Features</h2>
+    <ul>
+      <li>Quantum-accelerated 256-core processor</li>
+      <li>Ultra-low latency encrypted communication channels</li>
+      <li>Adaptive AI firewall with real-time threat neutralization</li>
+      <li>Custom cybernetic memory banks with 5TB capacity</li>
+      <li>Darknet gateway with multi-protocol tunneling</li>
+      <li>Self-healing architecture to avoid downtime</li>
+    </ul>
+  </section>
+
+  <section class="content" id="contact">
+    <h2>Get in Touch</h2>
+    <p>Ready to breach the digital frontier? Contact the Waro command center.</p>
+    <button class="btn" onclick="alert('Access request sent to WARO command center. Stand by...')">Request Access</button>
+  </section>
 
 </body>
 </html>
