@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WARO — Dark Red Cyberpunk Server</title>
+  <title>WARO Welcome</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
     /* Reset */
     * {
@@ -16,15 +16,14 @@
       background: #120000; /* very dark red almost black */
       color: #ff1a1a; /* bright red */
       font-family: 'Share Tech Mono', monospace;
-      overflow-x: hidden;
       height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      padding: 3rem 1rem;
-      position: relative;
+      justify-content: center;
+      padding: 1rem;
       user-select: none;
+      overflow: hidden;
+      position: relative;
     }
 
     /* Scanline effect background */
@@ -48,206 +47,48 @@
       100% { background-position: 0 100%; }
     }
 
-    /* Falling code effect */
-    .code-rain {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 1;
-      font-family: 'VT323', monospace;
-      font-size: 1.3rem;
-      color: #ff1a1a;
-      opacity: 0.1;
+    /* Neon flicker text box */
+    .welcome-box {
+      background: rgba(255, 0, 0, 0.15);
+      border: 2px solid #cc0000;
+      border-radius: 12px;
+      padding: 2rem 3rem;
+      max-width: 600px;
+      text-align: center;
+      color: #ff4d4d;
+      font-size: 1.6rem;
+      box-shadow:
+        0 0 15px #ff0000,
+        inset 0 0 20px #cc0000;
       user-select: none;
-      text-shadow: 0 0 6px #ff0000;
-    }
-    .code-rain span {
-      display: inline-block;
-      animation: fall 8s linear infinite;
-      white-space: nowrap;
-    }
-    @keyframes fall {
-      0% { transform: translateY(-100%); opacity: 0; }
-      10% { opacity: 1; }
-      100% { transform: translateY(120vh); opacity: 0; }
+      text-shadow:
+        0 0 6px #ff1a1a,
+        0 0 12px #cc0000;
+      animation: flicker 4s infinite;
+      z-index: 1;
+      font-weight: 600;
     }
 
-    /* Neon flicker title */
-    h1 {
-      font-size: 5rem;
-      font-weight: 900;
-      letter-spacing: 0.3em;
-      color: #ff0000;
-      text-transform: uppercase;
-      text-align: center;
-      margin-bottom: 3rem;
-      text-shadow:
-        0 0 10px #ff0000,
-        0 0 25px #cc0000,
-        0 0 40px #990000,
-        0 0 60px #ff3333,
-        0 0 80px #ff0000;
-      animation: flicker 3s infinite;
-      user-select: none;
-      z-index: 2;
-      position: relative;
-    }
     @keyframes flicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+      0%, 20%, 40%, 60%, 80%, 100% {
         opacity: 1;
         text-shadow:
-          0 0 10px #ff0000,
-          0 0 25px #cc0000,
-          0 0 40px #990000,
-          0 0 60px #ff3333,
-          0 0 80px #ff0000;
+          0 0 6px #ff1a1a,
+          0 0 12px #cc0000;
       }
-      20%, 22%, 24%, 55% {
-        opacity: 0.4;
+      10%, 30%, 50%, 70%, 90% {
+        opacity: 0.7;
         text-shadow: none;
       }
     }
 
-    /* Glassmorphism content sections */
-    .content {
-      background: rgba(255, 0, 0, 0.1);
-      border: 2px solid #cc0000;
-      border-radius: 15px;
-      box-shadow:
-        0 0 15px #ff0000,
-        inset 0 0 15px #cc0000;
-      max-width: 700px;
-      width: 90%;
-      padding: 2rem;
-      margin-bottom: 3rem;
-      backdrop-filter: blur(6px);
-      color: #ff6666;
-      transition: box-shadow 0.5s ease;
-      z-index: 2;
-      position: relative;
-    }
-    .content:hover {
-      box-shadow:
-        0 0 30px #ff3300,
-        inset 0 0 25px #ff3300;
-    }
-
-    .content h2 {
-      font-size: 2.2rem;
-      margin-bottom: 1rem;
-      color: #ff3333;
-      text-shadow: 0 0 12px #cc0000;
-      user-select: none;
-    }
-
-    .content p, .content ul {
-      font-size: 1.15rem;
-      line-height: 1.5;
-      margin-bottom: 1rem;
-      color: #ff9999;
-    }
-
-    ul {
-      list-style: none;
-      padding-left: 1rem;
-    }
-
-    ul li {
-      position: relative;
-      padding-left: 1.2rem;
-      margin-bottom: 0.5rem;
-    }
-    ul li::before {
-      content: "▸";
-      position: absolute;
-      left: 0;
-      color: #ff4d4d;
-    }
-
-    /* Neon button */
-    .btn {
-      display: inline-block;
-      padding: 0.8rem 2.2rem;
-      border: 2px solid #cc0000;
-      color: #cc0000;
-      font-weight: 700;
-      font-size: 1.2rem;
-      border-radius: 40px;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      background: transparent;
-      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-      user-select: none;
-      margin-top: 1rem;
-      text-align: center;
-      box-shadow: 0 0 15px #cc0000;
-    }
-    .btn:hover {
-      background-color: #cc0000;
-      color: #330000;
-      box-shadow: 0 0 40px #ff3300;
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 3rem;
-        letter-spacing: 0.15em;
-      }
-      .content {
-        padding: 1.5rem;
-      }
-      .content h2 {
-        font-size: 1.8rem;
-      }
-    }
   </style>
 </head>
 <body>
 
-  <div class="code-rain" aria-hidden="true">
-    <!-- Random code strings repeated for effect -->
-    <span>01001001 01101110 01110100 01100101 01110010 01101110 01100101 01110100 &nbsp; • &nbsp;</span>
-    <span>01000011 01101111 01101110 01101110 01100101 01100011 01110100 01101001 01101111 01101110 &nbsp; • &nbsp;</span>
-    <span>10101010 11110000 00001111 11001100 &nbsp; • &nbsp;</span>
-    <span>System Override: Enabled &nbsp; • &nbsp;</span>
-    <span>Firewall: Breached &nbsp; • &nbsp;</span>
-    <span>Access Level: Root &nbsp; • &nbsp;</span>
-    <span>Data Stream: Active &nbsp; • &nbsp;</span>
-    <span>Encryption: AES-512 &nbsp; • &nbsp;</span>
-    <span>Loading Exploit Modules &nbsp; • &nbsp;</span>
-    <span>Hacking in Progress... &nbsp; • &nbsp;</span>
+  <div class="welcome-box">
+    Welcome to waro, where would you like to go first?
   </div>
-
-  <h1>W A R O</h1>
-
-  <section class="content" id="about">
-    <h2>About Waro</h2>
-    <p>Waro is a next-gen cyberpunk server designed to push the boundaries of digital warfare. It blends cutting-edge quantum computation with advanced AI-driven security protocols to maintain absolute dominance in cyberspace.</p>
-    <p>Built for hackers by hackers, Waro delivers lightning-fast data throughput with impenetrable stealth and unyielding resilience.</p>
-  </section>
-
-  <section class="content" id="features">
-    <h2>Features</h2>
-    <ul>
-      <li>Quantum-accelerated 256-core processor</li>
-      <li>Ultra-low latency encrypted communication channels</li>
-      <li>Adaptive AI firewall with real-time threat neutralization</li>
-      <li>Custom cybernetic memory banks with 5TB capacity</li>
-      <li>Darknet gateway with multi-protocol tunneling</li>
-      <li>Self-healing architecture to avoid downtime</li>
-    </ul>
-  </section>
-
-  <section class="content" id="contact">
-    <h2>Get in Touch</h2>
-    <p>Ready to breach the digital frontier? Contact the Waro command center.</p>
-    <button class="btn" onclick="alert('Access request sent to WARO command center. Stand by...')">Request Access</button>
-  </section>
 
 </body>
 </html>
