@@ -1,234 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Link Hider - WARO</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@800&display=swap');
+<html>
+<body style="background:#1a0000; color:#ff4d4d; font-family: monospace; text-align: center; padding: 2rem;">
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <h1>WARO BEAMS - Link Hider</h1>
 
-    body, html {
-      height: 100%;
-      background: #000;
-      font-family: 'Orbitron', sans-serif;
-      color: #ff1a1a;
-      overflow: hidden;
-    }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 0;
-    }
-
-    .container {
-      position: relative;
-      z-index: 1;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 2rem;
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 2rem;
-      text-shadow: 0 0 20px #ff1a1a, 0 0 40px #cc0000;
-    }
-
-    .input-box {
-      background-color: rgba(255, 26, 26, 0.05);
-      border: 1px solid rgba(255, 26, 26, 0.3);
-      padding: 1rem 2rem;
-      border-radius: 15px;
-      width: 300px;
-      max-width: 80%;
-      margin-bottom: 1rem;
-      backdrop-filter: blur(5px);
-    }
-
-    .input-box input {
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-      background: transparent;
-      border: none;
-      border-bottom: 2px solid #ff1a1a;
-      color: #ff1a1a;
-      outline: none;
-      text-align: center;
-    }
-
-    .input-box input::placeholder {
-      color: #ff4d4d;
-      opacity: 0.6;
-    }
-
-    button {
-      margin-top: 1rem;
-      padding: 0.6rem 1.5rem;
-      background-color: transparent;
-      border: 2px solid #ff1a1a;
-      color: #ff1a1a;
-      border-radius: 30px;
-      font-size: 1rem;
-      font-family: 'Orbitron', sans-serif;
-      cursor: pointer;
-      transition: 0.3s ease;
-      box-shadow: 0 0 10px #ff1a1a33;
-    }
-
-    button:hover {
-      background: #ff1a1a;
-      color: #000;
-      box-shadow: 0 0 20px #ff0000, 0 0 10px #ff0000 inset;
-    }
-
-    #result {
-      margin-top: 1rem;
-      font-size: 0.95rem;
-      color: #ff8080;
-    }
-
-    a.back {
-      margin-top: 2rem;
-      padding: 0.8rem 2rem;
-      font-size: 1rem;
-      color: #ff1a1a;
-      background: transparent;
-      border: 2px solid #ff1a1a;
-      border-radius: 40px;
-      text-decoration: none;
-      transition: 0.3s ease;
-      box-shadow: 0 0 12px #ff1a1a33;
-    }
-
-    a.back:hover {
-      background: #ff1a1a;
-      color: #000;
-      box-shadow: 0 0 20px #ff0000, 0 0 10px #ff0000 inset;
-    }
-  </style>
-</head>
-<body>
-  <canvas id="background"></canvas>
-
-  <div class="container">
-    <h1>WARO BEAMS</h1>
-    <div class="input-box">
-      <input type="text" id="linkInput" placeholder="Enter a link...">
-    </div>
-    <button onclick="handleLink()">Generate Hidden Link</button>
-    <div id="result"></div>
-    <a href="index.html" class="back">← Back to WARO BEAMS</a>
-  </div>
+  <input id="link" placeholder="Enter link starting with https://www-robloxn.com/" style="width: 350px; padding: 10px; font-size:16px;" />
+  <br><br>
+  <button onclick="shorten()">Hide Link</button>
+  <p id="result" style="margin-top: 20px;"></p>
 
   <script>
-    function handleLink() {
-      const input = document.getElementById('linkInput').value.trim();
+    async function shorten() {
+      const input = document.getElementById('link').value.trim();
       const result = document.getElementById('result');
 
-      if (!input.startsWith("https://www-robloxn.com/")) {
-        result.style.color = "#ff4d4d";
-        result.innerText = "❌ Invalid link. Must start with https://www-robloxn.com/";
+      if (!input.startsWith('https://www-robloxn.com/')) {
+        result.style.color = 'red';
+        result.textContent = 'Invalid link! Must start with https://www-robloxn.com/';
         return;
       }
 
-      const fakeCode = Math.random().toString(36).substring(2, 8);
-      const fakeShort = `https://waro.tools/r/${fakeCode}`;
-      result.style.color = "#00ff88";
-      result.innerHTML = `✅ Hidden Link: <a href="${input}" target="_blank" style="color:#ff1a1a;">${fakeShort}</a>`;
+      result.style.color = '#ff4d4d';
+      result.textContent = 'Generating shortened link...';
+
+      try {
+        const response = await fetch('https://tinyurl.com/api-create.php?url=' + encodeURIComponent(input));
+        const shortUrl = await response.text();
+
+        result.style.color = '#00ff88';
+        result.innerHTML = `Your hidden link:<br><a href="${shortUrl}" target="_blank" style="color:#00ff88;">${shortUrl}</a>`;
+      } catch (error) {
+        result.style.color = 'red';
+        result.textContent = 'Error generating short link.';
+      }
     }
   </script>
 
-  <script>
-    // background particles
-    const canvas = document.getElementById('background');
-    const ctx = canvas.getContext('2d');
-
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
-
-    window.addEventListener('resize', () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    });
-
-    const particles = [];
-
-    class Particle {
-      constructor() {
-        this.reset();
-      }
-
-      reset() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.radius = Math.random() * 2;
-        this.vx = Math.random() * 0.5 - 0.25;
-        this.vy = Math.random() * 0.5 - 0.25;
-      }
-
-      move() {
-        this.x += this.vx;
-        this.y += this.vy;
-        if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
-          this.reset();
-        }
-      }
-
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 0, 0, 0.6)';
-        ctx.fill();
-      }
-    }
-
-    for (let i = 0; i < 100; i++) {
-      particles.push(new Particle());
-    }
-
-    function connectParticles() {
-      for (let a = 0; a < particles.length; a++) {
-        for (let b = a + 1; b < particles.length; b++) {
-          const dx = particles[a].x - particles[b].x;
-          const dy = particles[a].y - particles[b].y;
-          const dist = dx * dx + dy * dy;
-
-          if (dist < 4000) {
-            ctx.beginPath();
-            ctx.strokeStyle = 'rgba(255, 0, 0, 0.1)';
-            ctx.lineWidth = 1;
-            ctx.moveTo(particles[a].x, particles[a].y);
-            ctx.lineTo(particles[b].x, particles[b].y);
-            ctx.stroke();
-          }
-        }
-      }
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
-      particles.forEach(p => {
-        p.move();
-        p.draw();
-      });
-      connectParticles();
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-  </script>
 </body>
 </html>
