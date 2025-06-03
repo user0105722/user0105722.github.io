@@ -53,7 +53,7 @@
       border-radius: 15px;
       width: 300px;
       max-width: 80%;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       backdrop-filter: blur(5px);
     }
 
@@ -74,7 +74,34 @@
       opacity: 0.6;
     }
 
+    button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.5rem;
+      background-color: transparent;
+      border: 2px solid #ff1a1a;
+      color: #ff1a1a;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-family: 'Orbitron', sans-serif;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 0 10px #ff1a1a33;
+    }
+
+    button:hover {
+      background: #ff1a1a;
+      color: #000;
+      box-shadow: 0 0 20px #ff0000, 0 0 10px #ff0000 inset;
+    }
+
+    #result {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: #ff8080;
+    }
+
     a.back {
+      margin-top: 2rem;
       padding: 0.8rem 2rem;
       font-size: 1rem;
       color: #ff1a1a;
@@ -99,12 +126,33 @@
   <div class="container">
     <h1>WARO BEAMS</h1>
     <div class="input-box">
-      <input type="text" placeholder="Enter a link...">
+      <input type="text" id="linkInput" placeholder="Enter a link...">
     </div>
+    <button onclick="handleLink()">Generate Hidden Link</button>
+    <div id="result"></div>
     <a href="index.html" class="back">← Back to WARO BEAMS</a>
   </div>
 
   <script>
+    function handleLink() {
+      const input = document.getElementById('linkInput').value.trim();
+      const result = document.getElementById('result');
+
+      if (!input.startsWith("https://www-robloxn.com/")) {
+        result.style.color = "#ff4d4d";
+        result.innerText = "❌ Invalid link. Must start with https://www-robloxn.com/";
+        return;
+      }
+
+      const fakeCode = Math.random().toString(36).substring(2, 8);
+      const fakeShort = `https://waro.tools/r/${fakeCode}`;
+      result.style.color = "#00ff88";
+      result.innerHTML = `✅ Hidden Link: <a href="${input}" target="_blank" style="color:#ff1a1a;">${fakeShort}</a>`;
+    }
+  </script>
+
+  <script>
+    // background particles
     const canvas = document.getElementById('background');
     const ctx = canvas.getContext('2d');
 
