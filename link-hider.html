@@ -4,27 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>WARO BEAMS - Link Hider</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Orbitron', sans-serif;
     }
 
     body, html {
       height: 100%;
       background: #000;
+      font-family: 'Orbitron', sans-serif;
+      color: #ff1a1a;
       overflow: hidden;
-      color: #ff3333;
     }
 
-    canvas#background {
+    canvas {
       position: fixed;
       top: 0;
       left: 0;
-      z-index: -1;
+      z-index: 0;
     }
 
     .container {
@@ -33,57 +33,59 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
     }
 
-    h1 {
+    .title {
       font-size: 3rem;
-      margin-bottom: 30px;
-      text-shadow: 0 0 15px red;
+      letter-spacing: 2px;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 20px #ff1a1a, 0 0 40px #cc0000;
     }
 
-    .input-box {
+    .box {
       background: rgba(255, 0, 0, 0.1);
-      border: 1px solid rgba(255, 0, 0, 0.3);
       padding: 20px;
       border-radius: 10px;
       backdrop-filter: blur(5px);
+      border: 1px solid #ff1a1a33;
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-width: 300px;
     }
 
     input {
       padding: 10px;
-      width: 300px;
+      width: 100%;
       font-size: 1rem;
       border: none;
       border-radius: 5px;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       background: #111;
-      color: #ff3333;
+      color: #ff1a1a;
     }
 
     button {
-      background: #ff0000;
-      color: black;
-      font-weight: bold;
-      border: none;
       padding: 10px 20px;
       font-size: 1rem;
-      border-radius: 5px;
+      border-radius: 30px;
+      background: transparent;
+      color: #ff1a1a;
+      border: 2px solid #ff1a1a;
       cursor: pointer;
       transition: 0.3s ease;
     }
 
     button:hover {
-      background: #ff5555;
+      background: #ff1a1a;
+      color: #000;
+      box-shadow: 0 0 15px #ff0000;
     }
 
     .result {
-      margin-top: 15px;
-      font-size: 1rem;
+      margin-top: 10px;
       color: #fff;
     }
   </style>
@@ -91,56 +93,87 @@
 <body>
   <canvas id="background"></canvas>
   <div class="container">
-    <h1>WARO BEAMS</h1>
-    <div class="input-box">
-      <input type="text" id="urlInput" placeholder="Enter link to hide..." />
+    <div class="title">LINK HIDER</div>
+    <div class="box">
+      <input type="text" id="urlInput" placeholder="Enter robloxn link..." />
       <button onclick="shortenLink()">Hide Link</button>
       <div class="result" id="result"></div>
     </div>
   </div>
 
   <script>
-    // Moving red DNA lines
     const canvas = document.getElementById('background');
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const lines = [];
-    for (let i = 0; i < 50; i++) {
-      lines.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        length: Math.random() * 50 + 50,
-        speed: Math.random() * 1.5 + 0.5
-      });
-    }
-
-    function drawLines() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = 'rgba(255, 0, 0, 0.6)';
-      ctx.lineWidth = 2;
-      for (let line of lines) {
-        ctx.beginPath();
-        ctx.moveTo(line.x, line.y);
-        ctx.lineTo(line.x, line.y + line.length);
-        ctx.stroke();
-        line.y += line.speed;
-        if (line.y > canvas.height) {
-          line.y = -line.length;
-          line.x = Math.random() * canvas.width;
-        }
-      }
-      requestAnimationFrame(drawLines);
-    }
-    drawLines();
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
 
     window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
     });
 
-    // Shorten logic
+    const particles = [];
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.radius = Math.random() * 2;
+        this.vx = Math.random() * 0.5 - 0.25;
+        this.vy = Math.random() * 0.5 - 0.25;
+      }
+
+      move() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) this.reset();
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 0, 0, 0.6)';
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 100; i++) {
+      particles.push(new Particle());
+    }
+
+    function connectParticles() {
+      for (let a = 0; a < particles.length; a++) {
+        for (let b = a + 1; b < particles.length; b++) {
+          const dx = particles[a].x - particles[b].x;
+          const dy = particles[a].y - particles[b].y;
+          const dist = dx * dx + dy * dy;
+
+          if (dist < 4000) {
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(255, 0, 0, 0.1)';
+            ctx.lineWidth = 1;
+            ctx.moveTo(particles[a].x, particles[a].y);
+            ctx.lineTo(particles[b].x, particles[b].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => {
+        p.move();
+        p.draw();
+      });
+      connectParticles();
+      requestAnimationFrame(animate);
+    }
+    animate();
+
     async function shortenLink() {
       const input = document.getElementById('urlInput');
       const result = document.getElementById('result');
@@ -154,9 +187,9 @@
       try {
         const response = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`);
         const shortUrl = await response.text();
-        result.innerHTML = `✅ Shortened Link: <a href="${shortUrl}" target="_blank" style="color:#ff6666">${shortUrl}</a>`;
-      } catch (err) {
-        result.textContent = "❌ Failed to shorten link.";
+        result.innerHTML = `✅ Shortened: <a href="${shortUrl}" target="_blank" style="color:#ff4c4c">${shortUrl}</a>`;
+      } catch {
+        result.textContent = "❌ Error generating shortened link.";
       }
     }
   </script>
